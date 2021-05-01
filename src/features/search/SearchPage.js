@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Header, Button, Form } from 'semantic-ui-react';
+import { Header, Card, Button, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 
@@ -31,12 +31,16 @@ export class SearchPage extends Component {
         <Header as='h1'>Semantic Similarity Search</Header>
         <Form onSubmit={doSearch}>
 
-          <Form.Input placeholder='what is on my mind'
-            name='query'
-            onChange={handleChange} />
-          <Button type="submit" onClick={doSearch} >
-            {doSearchPending ? 'Searching...' : 'Search'}
-          </Button>
+          <Form.Group>
+            <Form.Input placeholder='what is on my mind' width={12}
+              name='query'
+              onChange={handleChange} />
+            <Button primary width={2}
+              type="submit" onClick={doSearch} >
+              {doSearchPending ? 'Searching...' : 'Search'}
+            </Button>
+
+          </Form.Group>
         </Form>
 
         {doSearchError && (
@@ -45,25 +49,12 @@ export class SearchPage extends Component {
         {similars.length > 0 ? (
           <div>
             {similars.map(sentence => (
-              <div className="card-sentence" key={sentence.id}>
-
-                <div className="sentence-url">
-                  {sentence.url}
-                </div>
-                <div className="sentence-title" id={sentence.id}>
-                  {sentence.title}
-                </div>
-                <div>
-                  <a>
-                    <span className="sentence-score">{sentence.score}</span>
-                  </a>
-                  &nbsp; &middot; &nbsp;
-                  <a>
-                    <span className="sentence-author">{sentence.author}</span>
-                  </a>
-                </div>
-                {/*<p className="sentence-desc">{sentence.desc}</p>*/}
-              </div>
+              <Card id={sentence.id} className="search-search-card" fluid
+                href={sentence.url}
+                header={sentence.title}
+                meta={sentence.score + ' - ' + sentence.author}
+                description={sentence.desc}
+              />
             ))}
           </div>
         ) : (
