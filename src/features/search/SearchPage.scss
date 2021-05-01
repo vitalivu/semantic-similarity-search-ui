@@ -1,5 +1,31 @@
 @import '../../styles/mixins';
 
 .search-search-page {
-  padding: 30px;
+  padding: 0px;
+}
+
+.search-title {
+  color: #1a0dab;
+  font-size: 20px;
+  line-height: 1.3;
+}
+.search-score {
+  color: #343f44;
+  font-weight: bold;
+  font-size: small;
+}
+.search-author {
+  color: #006621;
+}
+.card-sentence {
+  margin: 20px auto;
+}
+.search-search-input {
+  border: 1px solid #999;
+  flex: 100%;
+  height: 1.5em;
+  font-size: 1em;
+  padding-left: 10px;
+  width: 60%;
+  min-width: 300px;
 }

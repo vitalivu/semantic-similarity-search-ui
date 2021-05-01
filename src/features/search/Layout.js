@@ -6,7 +6,7 @@ export default function Layout({ children }) {
   return (
     <div className="search-layout">
       <SidePanel />
-      <div className="examples-page-container">{children}</div>
+      <div className="search-page-container">{children}</div>
     </div>
   );
 };

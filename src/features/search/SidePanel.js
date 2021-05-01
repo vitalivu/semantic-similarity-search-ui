@@ -13,8 +13,8 @@ export default function SidePanel() {
         </li>
       </ul>
       <div className="memo">
-        This is a Rekit feature that contains some questions for you to quick learn how Rekit works.
-        To remove it just delete the feature.
+        For original paper, see <a href='https://arxiv.org/abs/1908.10084'>arxiv.org</a>. &nbsp;
+        <a href='https://www.kaggle.com/c/quora-question-pairs'>Quora Question Pairs</a> dataset
       </div>
     </div>
   );

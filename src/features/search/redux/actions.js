@@ -1,1 +1,1 @@
-export { handleSubmit, dismissHandleSubmitError } from './handleSubmit';
+export { doSearch, dismissDoSearchError } from './doSearch';

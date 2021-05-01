@@ -1,32 +1,39 @@
+import axios from 'axios';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
-  SEARCH_HANDLE_SUBMIT_BEGIN,
-  SEARCH_HANDLE_SUBMIT_SUCCESS,
-  SEARCH_HANDLE_SUBMIT_FAILURE,
-  SEARCH_HANDLE_SUBMIT_DISMISS_ERROR,
+  SEARCH_DO_SEARCH_BEGIN,
+  SEARCH_DO_SEARCH_SUCCESS,
+  SEARCH_DO_SEARCH_FAILURE,
+  SEARCH_DO_SEARCH_DISMISS_ERROR,
 } from './constants';
 
-export function handleSubmit(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+export function doSearch(args = {}) {
+  return (dispatch, getState) => { // optionally you can have getState as the second argument
     dispatch({
-      type: SEARCH_HANDLE_SUBMIT_BEGIN,
+      type: SEARCH_DO_SEARCH_BEGIN,
     });
+    const { search } = getState();
+    const { query, searching } = search;
+
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
+      const doRequest = axios.get(
+        'http://localhost:5000/api/search?offset=0&limit=10' +
+        (query && '&q=' + query),
+      );
       doRequest.then(
         (res) => {
           dispatch({
-            type: SEARCH_HANDLE_SUBMIT_SUCCESS,
-            data: res,
+            type: SEARCH_DO_SEARCH_SUCCESS,
+            data: res.data,
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: SEARCH_HANDLE_SUBMIT_FAILURE,
+            type: SEARCH_DO_SEARCH_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -38,9 +45,9 @@ export function handleSubmit(args = {}) {
   };
 }
 
-export function dismissHandleSubmitError() {
+export function dismissDoSearchError() {
   return {
-    type: SEARCH_HANDLE_SUBMIT_DISMISS_ERROR,
+    type: SEARCH_DO_SEARCH_DISMISS_ERROR,
   };
 }
 
@@ -57,7 +64,7 @@ export function useHandleSubmit(params) {
   );
 
   const boundAction = useCallback((...args) => {
-    return dispatch(handleSubmit(...args));
+    return dispatch(doSearch(...args));
   }, [dispatch]);
 
   useEffect(() => {
@@ -65,49 +72,51 @@ export function useHandleSubmit(params) {
   }, [...(params || []), boundAction]); // eslint-disable-line
 
   const boundDismissError = useCallback(() => {
-    return dispatch(dismissHandleSubmitError());
+    return dispatch(dismissDoSearchError());
   }, [dispatch]);
 
   return {
     query,
-    handleSubmit: boundAction,
+    doSearch: boundAction,
     handleSubmitPending,
     handleSubmitError,
-    dismissHandleSubmitError: boundDismissError,
+    dismissDoSearchError: boundDismissError,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case SEARCH_HANDLE_SUBMIT_BEGIN:
+    case SEARCH_DO_SEARCH_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        handleSubmitPending: true,
-        handleSubmitError: null,
+        doSearchPending: true,
+        doSearchError: null,
       };
 
-    case SEARCH_HANDLE_SUBMIT_SUCCESS:
+    case SEARCH_DO_SEARCH_SUCCESS:
       // The request is success
       return {
         ...state,
-        handleSubmitPending: false,
-        handleSubmitError: null,
+        doSearchPending: false,
+        doSearchError: null,
+        similars: action.data.similars,
+        question: action.data.question,
       };
 
-    case SEARCH_HANDLE_SUBMIT_FAILURE:
+    case SEARCH_DO_SEARCH_FAILURE:
       // The request is failed
       return {
         ...state,
-        handleSubmitPending: false,
-        handleSubmitError: action.data.error,
+        doSearchPending: false,
+        doSearchError: action.data.error,
       };
 
-    case SEARCH_HANDLE_SUBMIT_DISMISS_ERROR:
+    case SEARCH_DO_SEARCH_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        handleSubmitError: null,
+        doSearchError: null,
       };
 
     default:
