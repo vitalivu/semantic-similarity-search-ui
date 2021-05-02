@@ -10,7 +10,7 @@ export default function SidePanel() {
           <Link to="/"><Icon name='home'/>SSSearch</Link>
         </li>
         <li>
-          <Link to="/search"><Icon name='search'/>Search /bi-encoder</Link>
+          <Link to="/search"><Icon name='cube'/>Search /bi-encoder</Link>
         </li>
         <li>
           <Link to="/search?alt-true"><Icon name='code branch'/>Search /cross-encoder</Link>
