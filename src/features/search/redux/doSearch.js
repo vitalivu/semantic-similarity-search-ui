@@ -102,6 +102,7 @@ export function reducer(state, action) {
         doSearchError: null,
         similars: action.data.similars,
         question: action.data.question,
+        queryTime: action.data.query_time,
       };
 
     case SEARCH_DO_SEARCH_FAILURE:

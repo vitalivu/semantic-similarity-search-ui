@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Header, Card, Button, Form } from 'semantic-ui-react';
+import { Header, Label, Card, Button, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 
@@ -18,10 +18,13 @@ export class SearchPage extends Component {
     const { doSearch } = this.props.actions;
     if (this.props.location.search) {
       let params = queryString.parse(this.props.location.search);
-      let { q } = params;
+      let { q, alt } = params;
       if (q) {
         this.props.search.query = q;
         doSearch();
+      }
+      if (alt) {
+        this.props.search.altSearch = true;
       }
     }
 
@@ -29,7 +32,8 @@ export class SearchPage extends Component {
 
   render() {
 
-    const { doSearchPending, doSearchError, similars } = this.props.search;
+    const { query, doSearchPending, doSearchError,
+      similars, question, queryTime } = this.props.search;
     const { doSearch } = this.props.actions;
 
     const handleChange = event => { this.props.search.query = event.target.value; };
@@ -60,13 +64,14 @@ export class SearchPage extends Component {
         )}
         {similars.length > 0 ? (
           <div>
+            <Header as="h2">Similar questions to <span class='search-highlight'><i>{question}</i></span></Header>
+            <Header as="h5">Top 10 results in {queryTime} seconds</Header>
             {similars.map(sentence => (
-              <Card id={sentence.id} className="search-search-card" fluid onClick={handleClick}
-                href={'/search?offset=0&limit=10&q=' + sentence.title}
-                header={sentence.title}
-                meta={sentence.score + ' - ' + sentence.author}
-                description={sentence.desc}
-              />
+                <Card id={sentence.id} className="search-search-card" fluid onClick={handleClick}
+                  href={'/search?offset=0&limit=10&q=' + sentence.title}
+                  header={sentence.title}
+                  meta={sentence.score + ' - ' + sentence.author}
+                  description={sentence.desc} />
             ))}
           </div>
         ) : (

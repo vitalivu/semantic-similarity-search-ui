@@ -6,13 +6,13 @@ export default function WelcomePage() {
     <div className="home-welcome-page">
       <header className="app-header">
         <img src={require('../../images/rekit-react.png')} className="rekit-logo" alt="logo" />
-        <h1 className="app-title">Welcome to Semantic Similarity Search</h1>
+        <h1 className="app-title">Semantic Similarity Search</h1>
       </header>
       <div className="app-intro">
         <h3>To get started:</h3>
         <ul>
           <li>
-            Enter the <Link to="/search">/search</Link> page
+            enter the <Link to="/search">/search</Link> page
           </li>
         </ul>
       </div>

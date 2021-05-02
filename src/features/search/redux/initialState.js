@@ -10,6 +10,9 @@ const initialState = {
   doSearchError: null,
   query: '',
   similars: [],
+  question: '',
+  queryTime: 0,
+  altSearch: false,
 };
 
 export default initialState;
