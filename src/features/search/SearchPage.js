@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { Header, Card, Button, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 
 
 export class SearchPage extends Component {
@@ -13,16 +14,27 @@ export class SearchPage extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  componentDidMount() {
+    const { doSearch } = this.props.actions;
+    if (this.props.location.search) {
+      let params = queryString.parse(this.props.location.search);
+      let { q } = params;
+      if (q) {
+        this.props.search.query = q;
+        doSearch();
+      }
+    }
+
+  }
+
   render() {
 
-    const { doSearchPending, doSearchError,
-      similars
-    } = this.props.search;
+    const { doSearchPending, doSearchError, similars } = this.props.search;
     const { doSearch } = this.props.actions;
 
-
-    const handleChange = event => {
-      this.props.search.query = event.target.value;
+    const handleChange = event => { this.props.search.query = event.target.value; };
+    const handleClick = event => {
+      console.log(event)
     };
 
     return (
@@ -49,8 +61,8 @@ export class SearchPage extends Component {
         {similars.length > 0 ? (
           <div>
             {similars.map(sentence => (
-              <Card id={sentence.id} className="search-search-card" fluid
-                href={sentence.url}
+              <Card id={sentence.id} className="search-search-card" fluid onClick={handleClick}
+                href={'/search?offset=0&limit=10&q=' + sentence.title}
                 header={sentence.title}
                 meta={sentence.score + ' - ' + sentence.author}
                 description={sentence.desc}
@@ -59,15 +71,10 @@ export class SearchPage extends Component {
           </div>
         ) : (
             <div>
-              <p>Let's search some book by title or author.</p>
+              <p>Let search your questions</p>
             </div>
           )}
-
-
       </div>
-
-
-
     );
   }
 }
