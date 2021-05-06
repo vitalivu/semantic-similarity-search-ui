@@ -25,6 +25,8 @@ export class SearchPage extends Component {
       }
       if (alt) {
         this.props.search.altSearch = true;
+      } else {
+        this.props.search.altSearch = false;
       }
     }
 
@@ -67,11 +69,11 @@ export class SearchPage extends Component {
             <Header as="h2">Similar questions to <span class='search-highlight'><i>{question}</i></span></Header>
             <Header as="h5">Top 10 results in {queryTime} seconds</Header>
             {similars.map(sentence => (
-                <Card id={sentence.id} className="search-search-card" fluid onClick={handleClick}
-                  href={'/search?offset=0&limit=10&q=' + sentence.title}
-                  header={sentence.title}
-                  meta={sentence.score + ' - ' + sentence.author}
-                  description={sentence.desc} />
+              <Card id={sentence.id} className="search-search-card" fluid onClick={handleClick}
+                href={'/search?offset=0&limit=10&q=' + sentence.title}
+                header={sentence.title}
+                meta={sentence.score + ' - ' + sentence.author}
+                description={sentence.desc} />
             ))}
           </div>
         ) : (

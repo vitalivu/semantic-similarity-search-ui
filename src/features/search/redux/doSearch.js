@@ -14,12 +14,12 @@ export function doSearch(args = {}) {
       type: SEARCH_DO_SEARCH_BEGIN,
     });
     const { search } = getState();
-    const { query, searching } = search;
+    const { query } = search;
 
 
     const promise = new Promise((resolve, reject) => {
       const doRequest = axios.get(
-        'http://localhost:5000/api/search?offset=0&limit=10' +
+        process.env.REACT_APP_API_ENDPOINT+'/api/search?offset=0&limit=10' +
         (query && '&q=' + query),
       );
       doRequest.then(
