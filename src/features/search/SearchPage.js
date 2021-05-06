@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Header, Label, Card, Button, Form } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Header, Card, Button, Form } from 'semantic-ui-react';
 import queryString from 'query-string';
 
 
@@ -34,7 +33,7 @@ export class SearchPage extends Component {
 
   render() {
 
-    const { query, doSearchPending, doSearchError,
+    const { doSearchPending, doSearchError,
       similars, question, queryTime } = this.props.search;
     const { doSearch } = this.props.actions;
 
