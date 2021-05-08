@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Header, Card, Button, Form } from 'semantic-ui-react';
+import { Header, Card, Button, Label, Icon, Form } from 'semantic-ui-react';
 import queryString from 'query-string';
 
 
@@ -68,11 +68,18 @@ export class SearchPage extends Component {
             <Header as="h2">Similar questions to <span class='search-highlight'><i>{question}</i></span></Header>
             <Header as="h5">Top 10 results in {queryTime} seconds</Header>
             {similars.map(sentence => (
-              <Card id={sentence.id} className="search-search-card" fluid onClick={handleClick}
-                href={'/search?offset=0&limit=10&q=' + sentence.title}
-                header={sentence.title}
-                meta={sentence.score + ' - ' + sentence.author}
-                description={sentence.desc} />
+              sentence.questions.map(quest => (
+                <Card id={sentence.id} className="search-search-card" fluid onClick={handleClick}
+                  href={'/search?offset=0&limit=10&q=' + quest}>
+                  <Card.Content header={quest} ></Card.Content>
+                  <Card.Content description={sentence.clean_text} />
+                  <Card.Content extra>
+                    <Icon name='user' />{sentence.author}
+                    <Label floating color={sentence.score==1?'red':(sentence.score>0.85?'blue':'grey')}>{sentence.score}</Label>
+                  </Card.Content>
+                  </Card>
+
+              ))
             ))}
           </div>
         ) : (
