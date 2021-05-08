@@ -14,14 +14,14 @@ export function doSearch(args = {}) {
       type: SEARCH_DO_SEARCH_BEGIN,
     });
     const { search } = getState();
-    const { query } = search;
+    const { random, altSearch, query } = search;
 
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.get(
-        process.env.REACT_APP_API_ENDPOINT+'/api/search?offset=0&limit=10' +
-        (query && '&q=' + query),
-      );
+      const doRequest = axios.get(process.env.REACT_APP_API_ENDPOINT + '/api/search?offset=0&limit=10' +
+        (random ? '&random' : '') +
+        (altSearch ? '&alt' : '') +
+        (query && '&q=' + query));
       doRequest.then(
         (res) => {
           dispatch({

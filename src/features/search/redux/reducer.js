@@ -8,9 +8,11 @@
 
 import initialState from './initialState';
 import { reducer as doSearchReducer } from './doSearch';
+import { reducer as suggestQuestionReducer } from './suggestQuestion';
 
 const reducers = [
   doSearchReducer,
+  suggestQuestionReducer,
 ];
 
 export default function reducer(state = initialState, action) {

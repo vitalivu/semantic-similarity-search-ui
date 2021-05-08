@@ -11,8 +11,12 @@ const initialState = {
   query: '',
   similars: [],
   question: '',
+  suggest:'',
   queryTime: 0,
   altSearch: false,
+  random: false,
+  suggestQuestionPending: false,
+  suggestQuestionError: null,
 };
 
 export default initialState;
