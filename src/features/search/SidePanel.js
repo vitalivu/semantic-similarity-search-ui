@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 
@@ -7,16 +7,13 @@ export default function SidePanel() {
     <div className="search-side-panel">
       <ul>
         <li>
-          <Link to="/"><Icon name='home'/>SSSearch</Link>
+          <Link to="/"><Icon name='home'/>Home</Link>
         </li>
         <li>
-          <Link to="/search"><Icon name='cube'/>Search /bi-encoder</Link>
+          <a href="/search?random"><Icon name='cube'/>Explore /bi-encoder</a>
         </li>
         <li>
-          <Link to="/search?alt"><Icon name='code branch'/>Search /cross-encoder</Link>
-        </li>
-        <li>
-          <a href="/search?random" ><Icon name='globe'/>Explore questions</a>
+          <a href="/search?random&alt"><Icon name='code branch'/>Explore /cross-encoder</a>
         </li>
         <li>
           <a href="https://arxiv.org/abs/1908.10084" target="blank"><Icon name='file'/> The paper - SBERT</a>

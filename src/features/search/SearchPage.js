@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Header, Card, Button, Label, Icon, Form } from 'semantic-ui-react';
+import { Header, Card, Button, Checkbox, Label, Icon, Form } from 'semantic-ui-react';
 import queryString from 'query-string';
 
 
@@ -15,18 +15,21 @@ export class SearchPage extends Component {
 
   componentDidMount() {
     const { doSearch, suggestQuestion } = this.props.actions;
-    console.log('componentDidMount', this.props);
     if (this.props.location.search) {
       let params = queryString.parse(this.props.location.search);
       let { q, random, alt } = params;// if random/alt is present, its value is null
       if (q) {
         this.props.search.query = q;
-        if (alt===null) {
+        if (alt === null || alt) {
           this.props.search.altSearch = true;
         }
         doSearch();
-      } if (random === null) {
+      }
+      if (random === null) {
         this.props.search.random = true;
+        if (alt === null || alt) {
+          this.props.search.altSearch = true;
+        }
         doSearch();
       }
     } else {
@@ -41,6 +44,10 @@ export class SearchPage extends Component {
     const { doSearch } = this.props.actions;
 
     const handleChange = event => { this.props.search.query = event.target.value; };
+    const handleSwitchSearch = event => {
+      this.props.search.altSearch = !this.props.search.altSearch;
+      console.log('handleSwitchSearch to new state', this.props.search.altSearch)
+    };
 
     return (
       <div className="search-search-page">
@@ -49,13 +56,9 @@ export class SearchPage extends Component {
         <Form onSubmit={doSearch}>
 
           <Form.Group>
-            <Form.Input placeholder={suggest} width={12}
-              name='query' onChange={handleChange} />
-            <Button primary width={2}
-              type="submit" onClick={doSearch} >
-              {doSearchPending ? 'Searching...' : 'Search'}
-            </Button>
-
+            <Form.Input placeholder={suggest} width={8} name='query' onChange={handleChange} />
+            <Button width={2} primary disable={doSearchPending} type="submit" ><Icon name='search' />{doSearchPending ? 'Searching...' : 'Search'}</Button>
+            <Checkbox width={2} toggle label='Cross-Encoder' name='alt' onChange={handleSwitchSearch} />
           </Form.Group>
         </Form>
 
@@ -65,10 +68,10 @@ export class SearchPage extends Component {
         {similars.length > 0 ? (
           <div>
             <Header as="h3">Similar questions to <span class='search-highlight'><i>{question}</i></span></Header>
-            <Header as="h5">Top 10 results in {queryTime} seconds</Header>
+            <Header as="h5">Top 10 results in <span className="search-highlight">{queryTime}</span> seconds</Header>
             {similars.map(sentence => (
               sentence.questions.map(quest => (
-                <Card id={sentence.id} className="search-search-card" fluid href={'/search?offset=0&limit=10&q=' + quest}>
+                <Card id={sentence.id} className="search-search-card" fluid href={'/search?offset=0&limit=10&q=' + quest} title={sentence.id}>
                   <Card.Content header={quest} ></Card.Content>
                   <Card.Content description={sentence.clean_text} />
                   <Card.Content extra>
