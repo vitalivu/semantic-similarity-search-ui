@@ -76,7 +76,7 @@ export class SearchPage extends Component {
                   <Card.Content description={sentence.clean_text} />
                   <Card.Content extra>
                     <Icon name='user' />{sentence.author}
-                    <Label floating color={sentence.score == 1 ? 'red' : (sentence.score > 0.85 ? 'blue' : 'grey')}>{sentence.score}</Label>
+                    <Label floating color={sentence.score >= 0.999 ? 'red' : (sentence.score > 0.85 ? 'blue' : 'grey')}>{sentence.score}</Label>
                   </Card.Content>
                 </Card>
 
