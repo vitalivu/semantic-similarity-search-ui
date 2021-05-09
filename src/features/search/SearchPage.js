@@ -57,7 +57,7 @@ export class SearchPage extends Component {
 
           <Form.Group>
             <Form.Input placeholder={suggest} width={8} name='query' onChange={handleChange} />
-            <Button width={2} primary disable={doSearchPending} type="submit" ><Icon name='search' />{doSearchPending ? 'Searching...' : 'Search'}</Button>
+            <Button width={2} primary={!doSearchPending} disable={doSearchPending} type="submit" ><Icon name='search' />{doSearchPending ? 'Searching...' : 'Search'}</Button>
             <Checkbox width={2} toggle label='Cross-Encoder' name='alt' onChange={handleSwitchSearch} />
           </Form.Group>
         </Form>

@@ -19,8 +19,8 @@ export function doSearch(args = {}) {
 
     const promise = new Promise((resolve, reject) => {
       const doRequest = axios.get(process.env.REACT_APP_API_ENDPOINT + '/api/search?offset=0&limit=10' +
-        (random ? '&random' : '') +
-        (altSearch ? '&alt' : '') +
+        (random ? '&random=true' : '') +
+        (altSearch ? '&alt=true' : '') +
         (query && '&q=' + query));
       doRequest.then(
         (res) => {

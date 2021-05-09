@@ -5,7 +5,7 @@ import { Layout, SearchPage } from './';
 
 export default {
   component: Layout,
-  path: 'search',
+  path: process.env.PUBLIC_URL+'/search',
   childRoutes: [
     { path: '', component: SearchPage, isIndex: true },
   ],
