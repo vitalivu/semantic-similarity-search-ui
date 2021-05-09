@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
   SEARCH_SUGGEST_QUESTION_BEGIN,
