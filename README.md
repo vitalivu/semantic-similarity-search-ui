@@ -20,3 +20,36 @@ Open in another console window:
 # yarn install
 yarn start
 ```
+
+## Deployment
+
+Make sure that every path successfully resolves to index.html and the client has full control over the routing logic
+
+### nginx
+
+create a conf file:
+```
+server {
+
+        root build;
+        index index.html;
+
+        server_name ssearch.net;
+
+        location / {
+	  if (!-e $request_filename){
+	    rewrite ^(.*)$ /index.html break;
+	  }
+        }
+        listen 80;
+        listen [::]:80;
+}
+```
+
+### netlify
+
+create a file `_redirects` with content:
+```
+/*   /index.html   200
+```
+for more details, see netlify's [tutorial](https://www.netlify.com/blog/2020/04/07/creating-better-more-predictable-redirect-rules-for-spas/)
