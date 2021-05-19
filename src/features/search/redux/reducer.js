@@ -9,10 +9,12 @@
 import initialState from './initialState';
 import { reducer as doSearchReducer } from './doSearch';
 import { reducer as suggestQuestionReducer } from './suggestQuestion';
+import { reducer as compareReducer } from './compare';
 
 const reducers = [
   doSearchReducer,
   suggestQuestionReducer,
+  compareReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -15,8 +15,16 @@ const initialState = {
   queryTime: 0,
   altSearch: false,
   random: false,
+
   suggestQuestionPending: false,
   suggestQuestionError: null,
+
+  comparePending: false,
+  compareError: null,
+  question1: '',
+  question2: '',
+  compareScores: [],
+  compareTime: 0,
 };
 
 export default initialState;

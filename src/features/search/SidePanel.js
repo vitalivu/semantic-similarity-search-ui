@@ -10,6 +10,9 @@ export default function SidePanel() {
           <Link to="/"><Icon name='home'/>Home</Link>
         </li>
         <li>
+          <a href="/search/compare"><Icon name='check square outline'/>Compare</a>
+        </li>
+        <li>
           <a href="/search?random"><Icon name='cube'/>Explore /bi-encoder</a>
         </li>
         <li>
